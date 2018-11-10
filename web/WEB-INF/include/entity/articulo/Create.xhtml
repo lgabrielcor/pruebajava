@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArticuloCreateDlg" widgetVar="ArticuloCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateArticuloTitle}" closeOnEscape="true">
+
+            <h:form id="ArticuloCreateForm">
+
+                <h:panelGroup id="display" rendered="#{articuloController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateArticuloLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{articuloController.selected.id}" title="#{myBundle.CreateArticuloTitle_id}" required="true" requiredMessage="#{myBundle.CreateArticuloRequiredMessage_id}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateArticuloLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{articuloController.selected.nombre}" title="#{myBundle.CreateArticuloTitle_nombre}" size="200" maxlength="200"/>
+
+                        <p:outputLabel value="#{myBundle.CreateArticuloLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{articuloController.selected.descripcion}" title="#{myBundle.CreateArticuloTitle_descripcion}" />
+
+                        <p:outputLabel value="#{myBundle.CreateArticuloLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{articuloController.selected.cantidad}" title="#{myBundle.CreateArticuloTitle_cantidad}" required="true" requiredMessage="#{myBundle.CreateArticuloRequiredMessage_cantidad}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateArticuloLabel_idtipoarticulo}" for="idtipoarticulo" />
+                        <p:selectOneMenu id="idtipoarticulo" value="#{articuloController.selected.idtipoarticulo}" required="true" requiredMessage="#{myBundle.CreateArticuloRequiredMessage_idtipoarticulo}" converter="tipoarticuloConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoarticuloController.items}"
+                                           var="idtipoarticuloItem"
+                                           itemValue="#{idtipoarticuloItem}"
+                                           itemLabel="#{idtipoarticuloItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{articuloController.saveNew}" value="#{myBundle.Save}" update="display,:ArticuloListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ArticuloCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ArticuloCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

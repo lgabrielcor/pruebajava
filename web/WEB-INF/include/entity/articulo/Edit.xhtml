@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ArticuloEditDlg" widgetVar="ArticuloEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditArticuloTitle}" closeOnEscape="true">
+
+            <h:form id="ArticuloEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{articuloController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditArticuloLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{articuloController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditArticuloLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{articuloController.selected.nombre}" title="#{myBundle.EditArticuloTitle_nombre}" size="200" maxlength="200"/>
+
+                        <p:outputLabel value="#{myBundle.EditArticuloLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{articuloController.selected.descripcion}" title="#{myBundle.EditArticuloTitle_descripcion}" />
+
+                        <p:outputLabel value="#{myBundle.EditArticuloLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{articuloController.selected.cantidad}" title="#{myBundle.EditArticuloTitle_cantidad}" required="true" requiredMessage="#{myBundle.EditArticuloRequiredMessage_cantidad}"/>
+
+                        <p:outputLabel value="#{myBundle.EditArticuloLabel_idtipoarticulo}" for="idtipoarticulo" />
+                        <p:selectOneMenu id="idtipoarticulo" value="#{articuloController.selected.idtipoarticulo}" required="true" requiredMessage="#{myBundle.EditArticuloRequiredMessage_idtipoarticulo}" converter="tipoarticuloConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoarticuloController.items}"
+                                           var="idtipoarticuloItem"
+                                           itemValue="#{idtipoarticuloItem}"
+                                           itemLabel="#{idtipoarticuloItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{articuloController.save}" value="#{myBundle.Save}" update="display,:ArticuloListForm:datalist,:ArticuloListForm:ArticuloDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ArticuloEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ArticuloEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

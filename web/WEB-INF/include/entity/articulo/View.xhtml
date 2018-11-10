@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArticuloViewDlg" widgetVar="ArticuloViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewArticuloTitle}" closeOnEscape="true">
+
+            <h:form id="ArticuloViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{articuloController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewArticuloLabel_id}"/>
+                        <h:outputText value="#{articuloController.selected.id}" title="#{myBundle.ViewArticuloTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewArticuloLabel_nombre}"/>
+                        <h:outputText value="#{articuloController.selected.nombre}" title="#{myBundle.ViewArticuloTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewArticuloLabel_descripcion}"/>
+                        <h:outputText value="#{articuloController.selected.descripcion}" title="#{myBundle.ViewArticuloTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewArticuloLabel_cantidad}"/>
+                        <h:outputText value="#{articuloController.selected.cantidad}" title="#{myBundle.ViewArticuloTitle_cantidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewArticuloLabel_idtipoarticulo}"/>
+                        <h:outputText value="#{articuloController.selected.idtipoarticulo.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ArticuloViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
